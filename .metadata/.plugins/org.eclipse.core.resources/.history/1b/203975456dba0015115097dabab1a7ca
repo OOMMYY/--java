@@ -1,0 +1,97 @@
+package dynamicProgramming;
+
+public class DKNAP {
+	double M;
+	double[] P,W;
+	int n=6;
+	int[] X=new int[n+1];
+	DKNAP(){
+		M=9;
+		double[] temp0={0,10,18,40,56,30,15};//本程序P,W以下标从1开始计数
+		P=temp0;
+		double[] temp1={0,1,2,5,8,5,3};
+		W=temp1;
+		int a;
+		for( a=0;a<10;a++){
+			if(a==6)
+				break;
+		}
+		System.out.println(a);
+		X=dknap(P,W,M,X,n);
+		for(int i=1;i<=n;i++){
+			System.out.print(X[i]+" ");
+		}
+	}
+	public int[] dknap(double[] p,double[] w,double M,int[] X,int n){
+		int[] F=new int[n+1];
+		int m=100;
+		double[] P=new double[m];
+		double[] W=new double[m];
+		double pp,ww;
+		int l,h,i,j,k,next,u,v;
+		F[0]=1;
+		P[1]=W[1]=0;//S0
+		l=h=1;//s0的起始和结束位置
+		F[1]=next=2;//P和W的第一个空位
+		for(i=1;i<n;i++){//生成Si
+			k=l;
+			for(v=F[i-1];v<F[i];v++){
+				if(W[v]+w[i]>M)
+					break;
+			}
+			u=v-1;//在l<=r<=h中使W(v)+W[i]<=M的最大的v;
+			System.out.println();
+			System.out.println(u+" ("+P[u]+","+W[u]+")"+" W[i]:"+w[i]);
+			System.out.println("S"+i+":");
+			for(j=l;j<=u;j++){//生成Si,1及归并
+				pp=P[j]+p[i];
+				ww=W[j]+w[i];//Si,i的下一个元素
+				while (k<=h&&W[k]<ww){//从Si-1中取元素来归并
+					P[next]=P[k];
+					W[next]=W[k];
+					System.out.print("("+P[k]+','+W[k]+") ");
+					next++;
+					k++;
+				}
+				if(k<=h&&W[k]==ww){//
+					pp=max(pp,P[k]);
+					k++;
+				}
+				if(pp>P[next-1]){//Si-1中最后一个序偶（P[next-1],W[next-1]）,如果P[next-1]>=pp,则舍弃（pp,ww）
+					P[next]=pp;
+					W[next]=ww;
+					next++;
+					System.out.print("("+pp+','+ww+") ");
+				}
+				while(k<=h&&P[k]<=P[next-1]){//清除
+					k++;
+				}
+			}
+				//将Si-1中剩余元素并入Si//
+				while(k<=h){
+					P[next]=P[k];
+					W[next]=W[k];
+					System.out.print("("+P[k]+','+W[k]+") ");
+					next++;
+					k++;
+				}
+				//对Si+1置初值//
+				l=h+1;
+				h=next-1;
+				F[i+1]=next;	
+		}
+		
+		return X;
+	}
+	public double max(double a,double b){
+		if(a>=b)
+			return a;
+		else
+			return b;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new DKNAP();
+	}
+
+}

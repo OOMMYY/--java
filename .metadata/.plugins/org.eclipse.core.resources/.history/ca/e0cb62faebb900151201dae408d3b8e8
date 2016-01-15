@@ -1,0 +1,18 @@
+package greedy;
+
+public class GREEDYKNAPSACK {
+	int M;
+	double[] P,W;
+	GREEDYKNAPSACK(){
+		M=80;
+		double[] temp0={10,18,40,56,30,15};
+		P=temp0;
+		double[] temp1={1,2,5,8,5,3};
+		W=temp1;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new GREEDYKNAPSACK();
+	}
+
+}

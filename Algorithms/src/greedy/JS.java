@@ -1,0 +1,45 @@
+package greedy;
+
+public class JS {
+	int n=7;
+	int [] D={0,2,3,1,3,4,5,2};//下标从1开始
+	float[] P={0,15,12,11,10,8,5,4};//先对P进行非增排序
+	int[] J=new int[n+1]; 
+	int k;
+	JS(){
+		k=js(D,J,n,k);
+		System.out.println("可调度作业数目:"+k);
+		double sum=0;
+		System.out.print("作业调度次序："); 
+		for(int i=1;i<=k;i++){
+			System.out.print("->"+J[i]);
+			sum+=P[J[i]];
+		}
+		System.out.println();
+		System.out.println("总收益Sum="+sum);
+	}
+	public int js(int[] D,int[] J,int n,int k){
+		int i,r;
+		k=1;
+		J[1]=1;//把第一个作业加入
+		for(i=2;i<n;i++){
+			r=k;
+			while(D[J[r]]>D[i]&&D[J[r]]!=r){
+				r--;
+			}
+			if(D[J[r]]<=D[i]&&D[i]>r){
+				for(int l=k;l>r;l--){
+					J[l+1]=J[l];
+				}
+				J[r+1]=i;
+				k++;
+			}
+		}
+		return k;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new JS();
+	}
+
+}

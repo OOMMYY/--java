@@ -1,0 +1,58 @@
+package divideAndConquer;
+
+import java.lang.reflect.Array;
+
+public class MERGE {
+	int[] a={2,4,67,8,98,44,2,344,43,3,4,4,3,4,3};
+	int n=Array.getLength(a);
+	MERGE(){
+		danc(0,n);
+	}
+	public void danc(int low,int high){
+		int mid=(low+high)/2;
+		if(high-low==1)
+			return;
+		danc(low,mid-1);
+		danc(mid,high);
+		merge(low,mid,high);
+	}
+	public void merge(int low,int mid,int high){
+		int[] b=new int[high];
+		int i=low;
+		int j=mid;
+		int k=low;
+		while(i<mid&&j<=high){
+			if(a[i]<=a[j]){
+				b[k]=a[i];
+				i++;
+				k++;
+			}else{
+				b[k]=a[j];
+				j++;
+				k++;
+			}
+		}
+		if(i<mid){
+			for(;i<mid;i++){
+				b[k]=a[i];
+				i++;
+				k++;
+			}
+		}
+		if(j<=high){
+			for(;j<=high;j++){
+				b[k]=a[j];
+				j++;
+				k++;
+			}
+		}
+		for(i=low;i<high;i++){
+			a[i]=b[i];
+		}
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new MERGE();
+	}
+
+}

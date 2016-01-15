@@ -1,0 +1,10 @@
+package branchAndBound;
+
+public class LC {
+	LC(){
+		
+	}
+	public static void main(String[] argv,String[] argc){
+		
+	}
+}
